@@ -27,6 +27,7 @@ var persistenceController = {
         var Comando = persistence.define('Comando', {
             ambiente: 'TEXT',
             utensilio: 'TEXT',
+            acao: 'TEXT',
             comando: 'INT'
         });
         //Removing verbose operations
