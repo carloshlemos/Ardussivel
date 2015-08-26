@@ -31,7 +31,6 @@ var persistenceController = {
         });
         //Removing verbose operations
         persistence.debug = true;
-
         //Defining relationships
         persistenceController.Comando = Comando;
         //Apply definitions to the DB
