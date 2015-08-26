@@ -1,0 +1,36 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <title>Ardussivel</title> 
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head> 
+    <body> 
+        <div data-role="page" data-theme="a"> 
+            <div data-role="header"> 
+                <h1>Ardussível</h1> 
+            </div> 
+            <div data-role="content">      
+                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
+                    <li data-role="list-divider">Opções</li> 
+                    <li><a href="#" id="btnLigar" class="ui-btn ui-btn-inline ui-icon-power ui-btn-icon-left">Ligar</a></li> 
+                    <li><a href="#" id="btnDesligar" class="ui-btn ui-btn-inline ui-icon-power ui-btn-icon-left">Desligar</a></li> 
+                </ul>           
+
+                <select name="flag" id="flag" data-role="slider" style="width: 
+                        ">
+                    <option value="off" selected="selected">Off</option>
+                    <option value="on">On</option>
+                </select>                
+            </div>   
+            <div data-role="footer">
+                <h4>&copy; 2015 Carlos Henrique Lemos</h4>
+            </div> 
+        </div> 
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body> 
+</html>
