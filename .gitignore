@@ -1,4 +1,3 @@
 /target/
 /platforms/
-/nbproject/
-/hooks/
+/nbproject/private/
