@@ -6,7 +6,6 @@ var persistenceController = {
         this.bindEvents();
         this.openDb();
         this.setupDatabase();
-        //this.createTable();
     },
     // Bind Event Listeners   
     bindEvents: function () {
