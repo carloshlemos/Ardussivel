@@ -27,23 +27,7 @@ var app = {
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-
-                    serviceController.connectJSONPOST(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando", function (result) {
-                        navigator.notification.activityStop();
-                        callBackFunction(result);
-                    }, function (error) {
-                        navigator.notification.activityStop();
-                        switch (error.status) {
-                            case 200:
-                                util.mensagemAtencao('Ocorreu um erro desconhecido.');
-                                break;
-                            case 0:
-                                util.mensagemErro('Serviço indisponível.');
-                                break
-                            default:
-                                util.mensagemErro('Erro: ' + error.responseText);
-                        }
-                    });
+                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
                     break;
                 case "off":
                     var comando = {
@@ -54,23 +38,7 @@ var app = {
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-
-                    serviceController.connectJSONPOST(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/", function (result) {
-                        navigator.notification.activityStop();
-                        callBackFunction(result);
-                    }, function (error) {
-                        navigator.notification.activityStop();
-                        switch (error.status) {
-                            case 200:
-                                util.mensagemAtencao('Ocorreu um erro desconhecido.');
-                                break;
-                            case 0:
-                                util.mensagemErro('Serviço indisponível.');
-                                break
-                            default:
-                                util.mensagemErro('Erro: ' + error.responseText);
-                        }
-                    });
+                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
                     break;
             }
         });
@@ -85,23 +53,7 @@ var app = {
             };
 
             var comandoJSON = JSON.stringify(comando);
-
-            serviceController.connectJSONPOST(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando", function (result) {
-                navigator.notification.activityStop();
-                callBackFunction(result);
-            }, function (error) {
-                navigator.notification.activityStop();
-                switch (error.status) {
-                    case 200:
-                        util.mensagemAtencao('Ocorreu um erro desconhecido.');
-                        break;
-                    case 0:
-                        util.mensagemErro('Serviço indisponível.');
-                        break
-                    default:
-                        util.mensagemErro('Erro: ' + error.responseText);
-                }
-            });
+            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
         });
 
         $("#btnDesligar").click(function () {
@@ -114,25 +66,25 @@ var app = {
             };
 
             var comandoJSON = JSON.stringify(comando);
-
-            serviceController.connectJSONPOST(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando", function (result) {
-                navigator.notification.activityStop();
-                callBackFunction(result);
-            }, function (error) {
-                navigator.notification.activityStop();
-                switch (error.status) {
-                    case 200:
-                        util.mensagemAtencao('Ocorreu um erro desconhecido.');
-                        break;
-                    case 0:
-                        util.mensagemErro('Serviço indisponível.');
-                        break
-                    default:
-                        util.mensagemErro('Erro: ' + error.responseText);
-                }
-            });
+            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
+        });
+    },
+    enviaComando: function (comandoJSON, url) {
+        serviceController.connectJSONPOST(comandoJSON, url, function (result) {
+            navigator.notification.activityStop();
+            util.mensagemInfo('Comando executado com sucesso!');
+        }, function (error) {
+            navigator.notification.activityStop();
+            switch (error.status) {
+                case 0:
+                    util.mensagemErro('Serviço indisponível.');
+                    break
+                default:
+                    util.mensagemErro('Erro: ' + error.responseText);
+            }
         });
     }
+
 };
 
 app.initialize();
