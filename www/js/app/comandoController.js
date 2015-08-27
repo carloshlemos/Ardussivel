@@ -11,6 +11,35 @@ var comandoController = {
     onDeviceReady: function () {
         persistenceController.initialize();
     },
+    insertDefault: function () {
+        persistence.transaction(function (transaction) {
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "lâmpada", acao: "ligar", comando: 1});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "lâmpada", acao: "desligar", comando: 2});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "ligar", comando: 1});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "desligar", comando: 2});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "ligar", comando: 1});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "desligar", comando: 2});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "abrir", comando: 1});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "fechar", comando: 2});
+            persistenceController.save(persistenceController.Comando);
+
+            persistenceController.flush();
+        });
+    },
     listarComandosPorAmbiente: function (ambiente, callBackFunction) {
         try {
             persistence.transaction(function (transaction) {
@@ -24,5 +53,14 @@ var comandoController = {
         catch (exc) {
             console.log("Error: " + exc);
         }
+    },
+    digaComando: function (param, maxResult, callBackFunction) {
+        navigator.SpeechRecognizer.startRecognize(function (result) {
+            var comandoVoz = result.toString();
+            callBackFunction(comandoVoz);
+        }, function (errorMessage) {
+            console.log("Error message: " + errorMessage);
+        }, maxResult, param, "pt-BR");
+
     }
 };
