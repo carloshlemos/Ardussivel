@@ -19,22 +19,22 @@ var comandoController = {
             persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "lâmpada", acao: "desligar", comando: 2});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "ligar", comando: 1});
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "ligar", comando: 3});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "desligar", comando: 2});
+            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "desligar", comando: 4});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "ligar", comando: 1});
+            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "ligar", comando: 5});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "desligar", comando: 2});
+            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "desligar", comando: 6});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "abrir", comando: 1});
+            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "abrir", comando: 7});
             persistenceController.save(persistenceController.Comando);
 
-            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "fechar", comando: 2});
+            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "fechar", comando: 8});
             persistenceController.save(persistenceController.Comando);
 
             persistenceController.flush();
