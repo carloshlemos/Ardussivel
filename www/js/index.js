@@ -91,19 +91,6 @@ var app = {
             }
             return false;
         }
-
-        $("#btnDesligar").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            var comando = {
-                "ambiente": "sala",
-                "utensilio": "lâmpada",
-                "comando": 2,
-                "macAddress": app.mac
-            };
-
-            var comandoJSON = JSON.stringify(comando);
-            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/");
-        });
     },
     enviaComando: function (comandoJSON, url) {
         serviceController.connectJSONPOST(comandoJSON, url, function (result) {
