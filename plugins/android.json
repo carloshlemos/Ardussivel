@@ -23,6 +23,10 @@
                         {
                             "xml": "<feature name=\"SpeechRecognizer\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.SpeechRecognizer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -50,6 +54,9 @@
             "PACKAGE_NAME": "br.alfa.Ardussivel"
         },
         "org.apache.cordova.plugin.speechrecognizer": {
+            "PACKAGE_NAME": "br.alfa.Ardussivel"
+        },
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "br.alfa.Ardussivel"
         }
     },

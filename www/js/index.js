@@ -9,10 +9,12 @@ var app = {
     },
     onDeviceReady: function () {
         util.initialize();
+        comandoController.initialize();
+        
 
         util.getMacAddress(function (macAddress) {
             app.mac = macAddress;
-            console.log('MacAddress: ' + macAddress);
+            console.log(macAddress);
         });
 
         $('select#flag').change(function () {
@@ -22,23 +24,23 @@ var app = {
                     var comando = {
                         "ambiente": "sala",
                         "utensilio": "lâmpada",
-                        "comando": "1",
+                        "comando": 1,
                         "macAddress": app.mac
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
+                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/");
                     break;
                 case "off":
                     var comando = {
                         "ambiente": "sala",
                         "utensilio": "lâmpada",
-                        "comando": "2",
+                        "comando": 2,
                         "macAddress": app.mac
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
+                    app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/");
                     break;
             }
         });
@@ -48,12 +50,29 @@ var app = {
             var comando = {
                 "ambiente": "sala",
                 "utensilio": "lâmpada",
-                "comando": "1",
+                "comando": 1,
                 "macAddress": app.mac
             };
 
-            var comandoJSON = JSON.stringify(comando);
-            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
+            navigator.SpeechRecognizer.startRecognize(function (result) {
+                var comando = result.toString();
+                alert(comando);
+
+                comandoController.listarComandosPorAmbiente(comando, function (results) {
+                    alert(results.length);
+//                    for (i = 0; i < results.length; i++) {
+//                        var ambiente = results[i];
+//                        
+//                        if (comando.indexOf(ambiente) > -1) {
+//                            var comandoJSON = JSON.stringify(comando);
+//                            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/");
+//                        }
+//                    }
+                });
+
+            }, function (errorMessage) {
+                console.log("Error message: " + errorMessage);
+            }, 2, "Diga o Comando", "pt-BR");
         });
 
         $("#btnDesligar").click(function () {
@@ -61,12 +80,12 @@ var app = {
             var comando = {
                 "ambiente": "sala",
                 "utensilio": "lâmpada",
-                "comando": "2",
+                "comando": 2,
                 "macAddress": app.mac
             };
 
             var comandoJSON = JSON.stringify(comando);
-            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando");
+            app.enviaComando(comandoJSON, "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/");
         });
     },
     enviaComando: function (comandoJSON, url) {

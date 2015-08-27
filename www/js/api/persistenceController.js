@@ -6,6 +6,7 @@ var persistenceController = {
         this.bindEvents();
         this.openDb();
         this.setupDatabase();
+        this.insertDefaults();
     },
     // Bind Event Listeners   
     bindEvents: function () {
