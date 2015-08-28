@@ -61,6 +61,5 @@ var comandoController = {
         }, function (errorMessage) {
             console.log("Error message: " + errorMessage);
         }, maxResult, param, "pt-BR");
-
     }
 };
