@@ -12,7 +12,7 @@ var app = {
     onDeviceReady: function () {
         util.initialize();
         comandoController.initialize();
-        comandoController.insertDefault(); //adiciona os comando ao banco de dados da aplicação
+        comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
 
         util.getMacAddress(function (macAddress) {
             app.mac = macAddress;
