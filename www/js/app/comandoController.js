@@ -36,12 +36,6 @@ var comandoController = {
 
             persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "fechar", comando: 8});
             persistenceController.save(persistenceController.Comando);
-            
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "ligar", comando: 9});
-            persistenceController.save(persistenceController.Comando);
-            
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "desligar", comando: 10});
-            persistenceController.save(persistenceController.Comando);
 
             persistenceController.flush();
         });
