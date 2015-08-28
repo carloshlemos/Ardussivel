@@ -1,6 +1,6 @@
 var app = {
     // Application Constructor
-    URL: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/",
+    URL: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComandoVoz/",
     mac: null,
     initialize: function () {
         this.bindEvents();

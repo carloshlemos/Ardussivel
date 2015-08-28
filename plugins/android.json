@@ -9,6 +9,14 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"MacAddressPlugin\"><param name=\"android-package\" value=\"com.badrit.MacAddress.MacAddressPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -17,15 +25,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"MacAddressPlugin\"><param name=\"android-package\" value=\"com.badrit.MacAddress.MacAddressPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"SpeechRecognizer\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.SpeechRecognizer\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -44,19 +44,19 @@
         }
     },
     "installed_plugins": {
+        "com.badrit.MacAddress": {
+            "PACKAGE_NAME": "br.alfa.Ardussivel"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "br.alfa.Ardussivel"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "br.alfa.Ardussivel"
         },
         "io.litehelpers.cordova.sqlite": {
             "PACKAGE_NAME": "br.alfa.Ardussivel"
         },
-        "com.badrit.MacAddress": {
-            "PACKAGE_NAME": "br.alfa.Ardussivel"
-        },
         "org.apache.cordova.plugin.speechrecognizer": {
-            "PACKAGE_NAME": "br.alfa.Ardussivel"
-        },
-        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "br.alfa.Ardussivel"
         }
     },
