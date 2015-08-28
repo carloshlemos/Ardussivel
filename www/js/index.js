@@ -1,7 +1,7 @@
 var app = {
     // Application Constructor
-    URLVoz: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComandoVoz/",
-    URL: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/",
+    URLComandoVoz: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComandoVoz/",
+    URLComando: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/",
     mac: null,
     initialize: function () {
         this.bindEvents();
@@ -23,10 +23,10 @@ var app = {
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
             switch ($(this).val()) {
                 case "on":
-                    app.enviaComando(app.URL + "?comando=1");
+                    app.enviaComando(app.URLComando + "?comando=1");
                     break;
                 case "off":
-                    app.enviaComando(app.URL + "?comando=2");
+                    app.enviaComando(app.URLComando + "?comando=2");
                     break;
             }
         });
@@ -38,9 +38,9 @@ var app = {
                     navigator.SpeechRecognizer.startRecognize(function (result) {
                         var comandoVoz = result.toString();
                         if (comandoVoz.indexOf("ligar") > -1) {
-                            app.enviaComando(app.URL + "?comando=1");
+                            app.enviaComando(app.URLComando + "?comando=1");
                         }else if (comandoVoz.indexOf("desligar") > -1) {
-                            app.enviaComando(app.URL + "?comando=2");
+                            app.enviaComando(app.URLComando + "?comando=2");
                         }
                     }, function (errorMessage) {
                         console.log("Error message: " + errorMessage);
@@ -88,7 +88,7 @@ var app = {
                             if (comandoVoz.indexOf(cmd.acao) > -1) {
                                 var comandoJSON = JSON.stringify(comando);
                                 navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-                                app.enviaComandoVoz(comandoJSON, app.URL);
+                                app.enviaComandoVoz(comandoJSON, app.URLComandoVoz);
                             }
                         });
                     }
