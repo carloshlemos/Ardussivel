@@ -1,6 +1,7 @@
 var app = {
     // Application Constructor
-    URL: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComandoVoz/",
+    URLVoz: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComandoVoz/",
+    URL: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/",
     mac: null,
     initialize: function () {
         this.bindEvents();
@@ -30,7 +31,7 @@ var app = {
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-                    app.enviaComando(comandoJSON, app.URL);
+                    app.enviaComando(comandoJSON, app.URL + "?comando=1");
                     break;
                 case "off":
                     var comando = {
@@ -41,7 +42,7 @@ var app = {
                     };
 
                     var comandoJSON = JSON.stringify(comando);
-                    app.enviaComando(comandoJSON, app.URL);
+                    app.enviaComando(comandoJSON, app.URL + "?comando=2");
                     break;
             }
         });
