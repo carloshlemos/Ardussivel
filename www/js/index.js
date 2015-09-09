@@ -65,18 +65,21 @@ var app = {
                 if (comandoVoz.indexOf("lâmpada") > -1) {
                     navigator.SpeechRecognizer.startRecognize(function (result) {
                         var comandoVoz = result.toString();
-                        if (comandoVoz.indexOf("ligar") > -1) {
-                            app.enviaComando(app.URLComando + "?comando=1");
-                        } else if (comandoVoz.indexOf("desligar") > -1) {
-                            app.enviaComando(app.URLComando + "?comando=2");
+                        switch (comandoVoz) {
+                            case "ligar":
+                                app.enviaComando(app.URLComando + "?comando=1");
+                                break
+                            case "desligar":
+                                app.enviaComando(app.URLComando + "?comando=2");
+                                break
                         }
                     }, function (errorMessage) {
                         console.log("Error message: " + errorMessage);
-                    }, 2, "Qual a Ação?", "pt-BR");
+                    }, 1, "Qual a Ação?", "pt-BR");
                 }
             }, function (errorMessage) {
                 console.log("Error message: " + errorMessage);
-            }, 2, "Qual o Utensílio?", "pt-BR");
+            }, 1, "Qual o Utensílio?", "pt-BR");
         });
 
         $("#btnVoz").click(function () { //Adicionar recursividade
@@ -142,12 +145,16 @@ var app = {
         });
     },
     enviaComando: function (url) {
-        serviceController.connectGETJSON(url, function (result) {
+        serviceController.connectJSONPOST(null, url, function (result) {
             navigator.notification.activityStop();
             util.mensagemInfo('Comando executado com sucesso!');
         }, function (error) {
             navigator.notification.activityStop();
             switch (error.status) {
+                case 200:
+                    console.log(error.responseText);
+                    //util.mensagemAtencao(error.responseText);
+                    break;
                 case 0:
                     util.mensagemErro('Serviço indisponível.');
                     break
