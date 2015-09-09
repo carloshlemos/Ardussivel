@@ -9,27 +9,42 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head> 
     <body> 
-        <div data-role="page" data-theme="a"> 
-            <div data-role="header"> 
-                <h1>Ardussível</h1> 
-            </div> 
-            <div data-role="content">      
-                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
-                    <li data-role="list-divider">Opções</li> 
-                    <li><a href="#" id="btnVozTeste" class="ui-btn ui-btn-inline ui-icon-power ui-btn-icon-left">Teste</a></li> 
-                    <li><a href="#" id="btnVoz" class="ui-btn ui-btn-inline ui-icon-power ui-btn-icon-left">Iniciar</a></li> 
-                </ul>           
-
-                <select name="flag" id="flag" data-role="slider" style="width: 
-                        ">
-                    <option value="off" selected="selected">Off</option>
-                    <option value="on">On</option>
-                </select>                
-            </div>   
-            <div data-role="footer">
-                <h4>&copy; 2015 Carloshlemos®</h4>
-            </div> 
-        </div> 
+        <div data-role="page" id="page1">
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <h1>Ardussivel</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="collapsible" data-theme="b">
+                    <h1>Lâmpada</h1>
+                    <a data-role="button" id="btnLigarLampada">Ligar</a>
+                    <a data-role="button" id="btnDesligarLampada">Desligar</a>
+                </div>
+                <div data-role="collapsible" data-theme="b">
+                    <h1>Ar Condicionado</h1>
+                    <a data-role="button" id="btnLigarArCondicionado">Ligar</a>
+                    <a data-role="button" id="btnDesligarArCondicionado">Desligar</a>
+                </div>
+                <div data-role="collapsible" data-theme="b">
+                    <h1>Televisor</h1>
+                    <a data-role="button" id="btnLigarTelevisor">Ligar</a>
+                    <a data-role="button" id="btnDesligarTelevisor">Desligar</a>
+                </div>
+                <div data-role="collapsible" data-theme="b">
+                    <h1>Portão da Garagem</h1>
+                    <a data-role="button" id="btnAbrirPortao">Abrir</a>
+                    <a data-role="button" id="btnFecharPortao">Fechar</a>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-theme="b">
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a data-role="button" id="btnVoz" data-icon="search">Comando de Voz</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
+        </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/lib/persistence.js"></script>
         <script type="text/javascript" src="js/lib/persistence.store.sql.js"></script>

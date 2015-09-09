@@ -19,16 +19,44 @@ var app = {
             console.log(macAddress);
         });
 
-        $('select#flag').change(function () {
+        $("#btnLigarLampada").click(function () {
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            switch ($(this).val()) {
-                case "on":
-                    app.enviaComando(app.URLComando + "?comando=1");
-                    break;
-                case "off":
-                    app.enviaComando(app.URLComando + "?comando=2");
-                    break;
-            }
+            app.enviaComando(app.URLComando + "?comando=1");
+        });
+
+        $("#btnDesligarLampada").click(function () {
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=2");
+        });
+
+        $("#btnLigarArCondicionado").click(function () {
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=3");
+        });
+
+        $("#btnDesligarLampada").click(function () {
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=4");
+        });
+
+        $("#btnLigarTelevisor").click(function () {
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=5");
+        });
+
+        $("#btnDesligarTelevisor").click(function () {
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=6");
+        });
+
+        $("#btnAbrirPortao").click(function () { 
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=7");
+        });
+
+        $("#btnFecharPortao").click(function () { 
+            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+            app.enviaComando(app.URLComando + "?comando=8");
         });
 
         $("#btnVozTeste").click(function () { //Adicionar recursividade
@@ -39,7 +67,7 @@ var app = {
                         var comandoVoz = result.toString();
                         if (comandoVoz.indexOf("ligar") > -1) {
                             app.enviaComando(app.URLComando + "?comando=1");
-                        }else if (comandoVoz.indexOf("desligar") > -1) {
+                        } else if (comandoVoz.indexOf("desligar") > -1) {
                             app.enviaComando(app.URLComando + "?comando=2");
                         }
                     }, function (errorMessage) {
