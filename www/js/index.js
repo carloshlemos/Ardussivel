@@ -12,7 +12,6 @@ var app = {
     onDeviceReady: function () {
         util.initialize();
         comandoController.initialize();
-        comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
 
         util.getMacAddress(function (macAddress) {
             app.mac = macAddress;
@@ -20,6 +19,7 @@ var app = {
         });
 
         $("#btnLigarLampada").click(function () {
+			comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
             app.enviaComando(app.URLComando + "?comando=1");
         });

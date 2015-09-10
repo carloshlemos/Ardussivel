@@ -1,7 +1,7 @@
 var comandoController = {
     // Application Constructor
     initialize: function () {
-        this.bindEvents();
+        this.bindEvents();		
     },
     // Bind Event Listeners   
     bindEvents: function () {
