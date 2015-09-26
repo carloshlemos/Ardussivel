@@ -12,6 +12,8 @@
         <div data-role="page" id="page1">
             <div data-role="header" data-position="fixed" data-theme="b">
                 <h1>Ardussivel</h1>
+                <a data-role="button" id="btnHome" data-icon="home" data-iconpos="notext"></a>
+                <a data-role="button" id="btnCadastrarComando" data-icon="plus" data-iconpos="notext" ></a>
             </div>
             <div data-role="content">
                 <div data-role="collapsible" data-theme="b">
@@ -40,6 +42,45 @@
                     <ul>
                         <li>
                             <a data-role="button" id="btnVoz" data-icon="search">Comando de Voz</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        <div data-role="page" id="page2">
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <h1>Ardussivel</h1>
+                <a data-role="button" id="btnCancelar" data-icon="home" data-iconpos="notext"></a>
+            </div>
+            <div data-role="content">
+                <form action="http://" method="POST">
+                    <div data-role="fieldcontain">
+                        <label for="txtAmbiente">Ambiente:</label>
+                        <input type="text" id="txtAmbiente" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="txtUtensilio">Utensílio:</label>
+                        <input type="text" id="txtUtensilio" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="txtAcao">Ação:</label>
+                        <input type="text" id="txtAcao" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="txtComando">Código de Comando:</label>
+                        <input type="number" id="txtComando" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="txtURL">URL:</label>
+                        <input type="text" id="txtURL" />
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer" data-position="fixed" data-theme="b">
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a data-role="button" id="btnSalvar" data-iconpos="notext">Salvar</a>
                         </li>
                     </ul>
                 </div>

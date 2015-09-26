@@ -13,13 +13,15 @@ var app = {
         util.initialize();
         comandoController.initialize();
 
+        $("#btnHome").hide();
+
         util.getMacAddress(function (macAddress) {
             app.mac = macAddress;
             console.log(macAddress);
         });
 
         $("#btnLigarLampada").click(function () {
-			comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
+            comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
             app.enviaComando(app.URLComando + "?comando=1");
         });
@@ -49,14 +51,47 @@ var app = {
             app.enviaComando(app.URLComando + "?comando=6");
         });
 
-        $("#btnAbrirPortao").click(function () { 
+        $("#btnAbrirPortao").click(function () {
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
             app.enviaComando(app.URLComando + "?comando=7");
         });
 
-        $("#btnFecharPortao").click(function () { 
+        $("#btnFecharPortao").click(function () {
             navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
             app.enviaComando(app.URLComando + "?comando=8");
+        });
+
+        $("#btnHome").click(function () {
+            $(':mobile-pagecontainer').pagecontainer('change', '#page1', {
+                transition: 'flip',
+                changeHash: false,
+                reverse: true,
+                showLoadMsg: true
+            });
+        });
+
+        $("#btnCadastrarComando").click(function () {
+            $("#btnHome").show();
+            $(':mobile-pagecontainer').pagecontainer('change', '#page2', {
+                transition: 'flip',
+                changeHash: false,
+                reverse: true,
+                showLoadMsg: true
+            });
+        });
+
+        $("#btnSalvar").click(function () {
+
+        });
+
+        $("#btnCancelar").click(function () {
+            $("#btnHome").hide();
+            $(':mobile-pagecontainer').pagecontainer('change', '#page1', {
+                transition: 'flip',
+                changeHash: false,
+                reverse: true,
+                showLoadMsg: true
+            });
         });
 
         $("#btnVozTeste").click(function () { //Adicionar recursividade
