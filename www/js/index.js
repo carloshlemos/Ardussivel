@@ -12,6 +12,7 @@ var app = {
     onDeviceReady: function () {
         util.initialize();
         comandoController.initialize();
+        comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
 
         $("#btnHome").hide();
 
@@ -20,46 +21,7 @@ var app = {
             console.log(macAddress);
         });
 
-        $("#btnLigarLampada").click(function () {
-            comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=1");
-        });
-
-        $("#btnDesligarLampada").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=2");
-        });
-
-        $("#btnLigarArCondicionado").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=3");
-        });
-
-        $("#btnDesligarLampada").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=4");
-        });
-
-        $("#btnLigarTelevisor").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=5");
-        });
-
-        $("#btnDesligarTelevisor").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=6");
-        });
-
-        $("#btnAbrirPortao").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=7");
-        });
-
-        $("#btnFecharPortao").click(function () {
-            navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
-            app.enviaComando(app.URLComando + "?comando=8");
-        });
+        app.montaPainelComandos();
 
         $("#btnHome").click(function () {
             $(':mobile-pagecontainer').pagecontainer('change', '#page1', {
@@ -72,6 +34,15 @@ var app = {
 
         $("#btnCadastrarComando").click(function () {
             $("#btnHome").show();
+            comandoController.listarTodos(function (results) {
+
+                for (i = 0; i < results.length; i++) {
+                    var comando = results[i];
+                    $("#listaComandosCadastrados").append('<li> <a href = "#" onclick=\'javascript:app.editComando(' + JSON.stringify(comando) + ');\'>' + comando.utensilio + ' - ' + comando.acao + '</a></li>');
+                    $('#listaComandosCadastrados').listview().listview('refresh');
+                }
+            });
+
             $(':mobile-pagecontainer').pagecontainer('change', '#page2', {
                 transition: 'flip',
                 changeHash: false,
@@ -80,8 +51,35 @@ var app = {
             });
         });
 
-        $("#btnSalvar").click(function () {
+        $("#btnNovo").click(function () {
+            $("#btnHome").show();
 
+            $(':mobile-pagecontainer').pagecontainer('change', '#page3', {
+                transition: 'flip',
+                changeHash: false,
+                reverse: true,
+                showLoadMsg: true
+            });
+        });
+
+        $("#btnSalvar").click(function () {
+            var comando = comandoController.getComando();
+            if (comando !== null) {
+                comando.ambiente = $('#txtAmbiente').val();
+                comando.utensilio = $('#txtUtensilio').val();
+                comando.acao = $('#txtAcao').val();
+                comando.comando = $('#txtComando').val();
+                comando.url = $('#txtURL').val();
+            } else {
+                var comando = new persistenceController.Comando({
+                    ambiente: $('#txtAmbiente').val(),
+                    utensilio: $('#txtUtensilio').val(),
+                    acao: $('#txtAcao').val(),
+                    comando: $('#txtComando').val(),
+                    url: $('#txtURL').val()
+                });
+            }
+            comandoController.salvar(comando);
         });
 
         $("#btnCancelar").click(function () {
@@ -94,6 +92,18 @@ var app = {
             });
         });
 
+        $("#txtComando").click(function () {
+            $('#resultadosVoz').empty();
+            navigator.SpeechRecognizer.startRecognize(function (results) {
+                for (i in results) {
+                    $("#resultadosVoz").append('<li> <a href = "#" onclick=\'javascript:app.addComando("' + results[i] + '");\'>' + results[i] + '</a></li>');
+                    $('#resultadosVoz').listview().listview('refresh');
+                }
+                $('#DlgComandos').popup({positionTo: "window"}).popup('open');
+            }, function (errorMessage) {
+                console.log("Error message: " + errorMessage);
+            }, 4, "Diga o Comando de Voz?", "pt-BR");
+        });
         $("#btnVozTeste").click(function () { //Adicionar recursividade
             navigator.SpeechRecognizer.startRecognize(function (result) {
                 var comandoVoz = result.toString();
@@ -197,5 +207,57 @@ var app = {
                     util.mensagemErro('Erro: ' + error.responseText);
             }
         });
+    },
+    addComando: function (comando) {
+        $("#txtComando").val(comando);
+        $('#DlgComandos').popup('close');
+    },
+    editComando: function (comando) {
+        comandoController.setComando(comando);
+        $("#txtAmbiente").val(comando.ambiente);
+        $("#txtUtensilio").val(comando.utensilio);
+        $("#txtAcao").val(comando.acao);
+        $("#txtComando").val(comando.comando);
+        $("#txtURL").val(comando.url);
+
+        $(':mobile-pagecontainer').pagecontainer('change', '#page3', {
+            transition: 'flip',
+            changeHash: false,
+            reverse: true,
+            showLoadMsg: true
+        });
+    },
+    montaPainelComandos: function () {
+        comandoController.listarTodos(function (results) {
+            var map = {};
+            for (i = 0; i < results.length; i++) {
+                var comando = results[i];
+                var keyMap = map[comando.utensilio];
+
+                if (keyMap === null || keyMap === undefined) {
+                    map[comando.utensilio] = [];
+                    map[comando.utensilio].push(comando);
+                } else {
+                    map[comando.utensilio].push(comando);
+                }
+            }
+
+            $.each(map, function (index, value) {
+                var key = index;
+                var htmlButtons = [];
+                for (indice in value) {
+                    htmlButtons.push(app.getButtonComando(value[indice]));
+                }
+                var content = "<div data-role='collapsible' data-theme='b' id='set" + key + "'><h3>" + key + "</h3>" + htmlButtons.join(" ") + "</div>";
+                $("#divBtnComandos").append(content).collapsibleset('refresh');
+            });
+        });
+    },
+    actionButtonCommand: function (comando) {
+        navigator.notification.activityStart("Aguarde", "Enviando solicitação...");
+        app.enviaComando(comando.url);
+    },
+    getButtonComando: function (comando) {
+        return "<a data-role='button' class='ui-link ui-btn ui-shadow ui-corner-all' onclick=\'javascript:app.actionButtonCommand(" + JSON.stringify(comando) + ");'>" + comando.acao + "</a>";
     }
 };

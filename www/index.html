@@ -15,27 +15,7 @@
                 <a data-role="button" id="btnHome" data-icon="home" data-iconpos="notext"></a>
                 <a data-role="button" id="btnCadastrarComando" data-icon="plus" data-iconpos="notext" ></a>
             </div>
-            <div data-role="content">
-                <div data-role="collapsible" data-theme="b">
-                    <h1>Lâmpada</h1>
-                    <a data-role="button" id="btnLigarLampada">Ligar</a>
-                    <a data-role="button" id="btnDesligarLampada">Desligar</a>
-                </div>
-                <div data-role="collapsible" data-theme="b">
-                    <h1>Ar Condicionado</h1>
-                    <a data-role="button" id="btnLigarArCondicionado">Ligar</a>
-                    <a data-role="button" id="btnDesligarArCondicionado">Desligar</a>
-                </div>
-                <div data-role="collapsible" data-theme="b">
-                    <h1>Televisor</h1>
-                    <a data-role="button" id="btnLigarTelevisor">Ligar</a>
-                    <a data-role="button" id="btnDesligarTelevisor">Desligar</a>
-                </div>
-                <div data-role="collapsible" data-theme="b">
-                    <h1>Portão da Garagem</h1>
-                    <a data-role="button" id="btnAbrirPortao">Abrir</a>
-                    <a data-role="button" id="btnFecharPortao">Fechar</a>
-                </div>
+            <div id="divBtnComandos" style="padding: 10px;" data-role="collapsible-set" data-content-theme="d">
             </div>
             <div data-role="footer" data-position="fixed" data-theme="b">
                 <div data-role="navbar">
@@ -49,38 +29,65 @@
         </div>
         <div data-role="page" id="page2">
             <div data-role="header" data-position="fixed" data-theme="b">
-                <h1>Ardussivel</h1>
-                <a data-role="button" id="btnCancelar" data-icon="home" data-iconpos="notext"></a>
-            </div>
+                <h1>Comandos cadastrados</h1>
+                <a data-role="button" id="btnVoltar" data-icon="home" data-iconpos="notext"></a>
+            </div>            
             <div data-role="content">
-                <form action="http://" method="POST">
-                    <div data-role="fieldcontain">
-                        <label for="txtAmbiente">Ambiente:</label>
-                        <input type="text" id="txtAmbiente" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="txtUtensilio">Utensílio:</label>
-                        <input type="text" id="txtUtensilio" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="txtAcao">Ação:</label>
-                        <input type="text" id="txtAcao" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="txtComando">Código de Comando:</label>
-                        <input type="number" id="txtComando" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="txtURL">URL:</label>
-                        <input type="text" id="txtURL" />
-                    </div>
-                </form>
+                <ul id="listaComandosCadastrados" data-role="listview">
+                </ul>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="b">
                 <div data-role="navbar">
                     <ul>
                         <li>
-                            <a data-role="button" id="btnSalvar" data-iconpos="notext">Salvar</a>
+                            <a data-role="button" id="btnNovo" data-icon="check" data-iconpos="notext">Novo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        <div data-role="page" id="page3">
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <h1>Ardussivel</h1>
+                <a data-role="button" id="btnCancelar" data-icon="home" data-iconpos="notext"></a>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="txtAmbiente">Ambiente:</label>
+                    <input type="text" id="txtAmbiente" placeholder="Informe o ambiente..." />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="txtUtensilio">Utensílio:</label>
+                    <input type="text" id="txtUtensilio" placeholder="Informe o utensílio..." />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="txtAcao">Ação:</label>
+                    <input type="text" id="txtAcao" placeholder="Informe a ação, exemplo: ligar..." />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="txtComando">Comando de Voz:</label>
+                    <input type="text" id="txtComando" placeholder="Digite o ou Diga o comando..." />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="txtURL">URL:</label>
+                    <input type="text" id="txtURL" placeholder="Exemplo: http://<host>:8080..." />
+                </div>
+
+                <div data-role="popup" data-overlay-theme="b" style="width: 400px;height: 220px;" id="DlgComandos">
+                    <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Fechar</a>
+                    <div data-role="header">
+                        <h1>Selecione o Comando</h1>
+                    </div>
+                    <div data-role="content">
+                        <ul id="resultadosVoz" data-role="listview"></ul>
+                    </div>
+                </div>                
+            </div>
+            <div data-role="footer" data-position="fixed" data-theme="b">
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a data-role="button" id="btnSalvar" data-icon="check" data-iconpos="notext">Salvar</a>
                         </li>
                     </ul>
                 </div>

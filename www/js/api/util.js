@@ -25,7 +25,12 @@ var util = {
         navigator.notification.alert(
                 mensagem,
                 function () {
-                    callbackFunction();
+                    if (callbackFunction != null) {
+                        callbackFunction();
+                    }else {
+                        console.log("##### CALLBACK Não Implementado ###");
+                    }
+
                 },
                 'Atenção',
                 'Ok'

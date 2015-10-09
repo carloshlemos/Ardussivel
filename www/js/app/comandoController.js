@@ -1,7 +1,8 @@
 var comandoController = {
     // Application Constructor
+    Comando: null,
     initialize: function () {
-        this.bindEvents();		
+        this.bindEvents();
     },
     // Bind Event Listeners   
     bindEvents: function () {
@@ -12,33 +13,36 @@ var comandoController = {
         persistenceController.initialize();
     },
     insertDefault: function () {
-        persistence.transaction(function (transaction) {
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "lâmpada", acao: "ligar", comando: 1});
-            persistenceController.save(persistenceController.Comando);
+        comandoController.listarTodos(function (results) {
+            if (results.length <= 0) {
+                persistence.transaction(function (transaction) {
+                    persistenceController.save(new persistenceController.Comando({ambiente: "Quarto", utensilio: "Lâmpada", acao: "Ligar", comando: "lâmpada ligar", url: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=1"}));
+                    persistenceController.save(new persistenceController.Comando({ambiente: "Quarto", utensilio: "Lâmpada", acao: "Desligar", comando: "lâmpada desligar", url: "http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=2"}));
 
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "lâmpada", acao: "desligar", comando: 2});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "ligar", comando: 3});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "quarto", utensilio: "ar condicionado", acao: "desligar", comando: 4});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "ligar", comando: 5});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "sala", utensilio: "tv", acao: "desligar", comando: 6});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "abrir", comando: 7});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.Comando = new Comando({ambiente: "entrada", utensilio: "portão", acao: "fechar", comando: 8});
-            persistenceController.save(persistenceController.Comando);
-
-            persistenceController.flush();
+                    persistenceController.flush();
+                });
+            }
         });
+    },
+    getComando: function() {
+        return comandoController.Comando;
+    },
+    setComando: function(comando){
+        comandoController.Comando = comando;
+    },
+    listarTodos: function (callBackFunction) {
+        try {
+            persistence.transaction(function (transaction) {
+                persistenceController.Comando.all()
+                        .order("utensilio", true)
+                        .list(null, function (results) {
+                            callBackFunction(results);
+                        });
+            });
+        }
+        catch (exc) {
+            console.log("Error: " + exc);
+        }
     },
     listarComandosPorAmbiente: function (ambiente, callBackFunction) {
         try {
@@ -61,5 +65,10 @@ var comandoController = {
         }, function (errorMessage) {
             console.log("Error message: " + errorMessage);
         }, maxResult, param, "pt-BR");
+    },
+    salvar: function (comando) {
+        persistenceController.save(comando);
+        persistenceController.flush();
+        util.mensagemAtencao('Comando salvo com sucesso.');
     }
 };

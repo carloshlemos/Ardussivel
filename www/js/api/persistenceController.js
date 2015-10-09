@@ -27,7 +27,8 @@ var persistenceController = {
             ambiente: 'TEXT',
             utensilio: 'TEXT',
             acao: 'TEXT',
-            comando: 'INT'
+            comando: 'TEXT',
+            url: 'TEXT'
         });
         //Removing verbose operations
         persistence.debug = true;
