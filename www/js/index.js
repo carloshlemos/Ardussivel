@@ -14,7 +14,18 @@ var app = {
         comandoController.initialize();
         comandoController.insertDefault(); //adiciona os comandos ao banco de dados da aplicação
 
+        $("#btnHome").click(function () {
+            app.montaPainelComandos();
+            $.mobile.changePage("#page1", {transition: "flip"}, true, false);
+        });
+
         $("#btnHome").hide();
+
+        $("#btnVoltar").click(function () {
+            $("#btnHome").hide();
+            app.montaPainelComandos();
+            $.mobile.changePage("#page1", {transition: "flip"}, true, false);
+        });
 
         util.getMacAddress(function (macAddress) {
             app.mac = macAddress;
@@ -23,80 +34,50 @@ var app = {
 
         app.montaPainelComandos();
 
-        $("#btnHome").click(function () {
-            $(':mobile-pagecontainer').pagecontainer('change', '#page1', {
-                transition: 'flip',
-                changeHash: false,
-                reverse: true,
-                showLoadMsg: true
-            });
-        });
-
         $("#btnCadastrarComando").click(function () {
             $("#btnHome").show();
-            comandoController.listarTodos(function (results) {
-
-                for (i = 0; i < results.length; i++) {
-                    var comando = results[i];
-                    $("#listaComandosCadastrados").append('<li> <a href = "#" onclick=\'javascript:app.editComando(' + JSON.stringify(comando) + ');\'>' + comando.utensilio + ' - ' + comando.acao + '</a></li>');
-                    $('#listaComandosCadastrados').listview().listview('refresh');
-                }
-            });
-
-            $(':mobile-pagecontainer').pagecontainer('change', '#page2', {
-                transition: 'flip',
-                changeHash: false,
-                reverse: true,
-                showLoadMsg: true
-            });
+            app.listaComandos();
+            $.mobile.changePage("#page2", {transition: "flip"}, true, false);
         });
 
         $("#btnNovo").click(function () {
             $("#btnHome").show();
-
-            $(':mobile-pagecontainer').pagecontainer('change', '#page3', {
-                transition: 'flip',
-                changeHash: false,
-                reverse: true,
-                showLoadMsg: true
-            });
+            $.mobile.changePage("#page3", {transition: "flip"}, true, false);
         });
 
         $("#btnSalvar").click(function () {
-            var comando = comandoController.getComando();
-            if (comando !== null) {
-                comando.ambiente = $('#txtAmbiente').val();
-                comando.utensilio = $('#txtUtensilio').val();
-                comando.acao = $('#txtAcao').val();
-                comando.comando = $('#txtComando').val();
-                comando.url = $('#txtURL').val();
-            } else {
-                var comando = new persistenceController.Comando({
-                    ambiente: $('#txtAmbiente').val(),
-                    utensilio: $('#txtUtensilio').val(),
-                    acao: $('#txtAcao').val(),
-                    comando: $('#txtComando').val(),
-                    url: $('#txtURL').val()
-                });
-            }
-            comandoController.salvar(comando);
+            comandoController.getComando(function (comando) {
+                if (comando !== null) {
+                    comando.ambiente = $('#txtAmbiente').val();
+                    comando.utensilio = $('#txtUtensilio').val();
+                    comando.acao = $('#txtAcao').val();
+                    comando.comando = $('#txtComando').val();
+                    comando.url = $('#txtURL').val();
+                } else {
+                    var comando = new persistenceController.Comando({
+                        ambiente: $('#txtAmbiente').val(),
+                        utensilio: $('#txtUtensilio').val(),
+                        acao: $('#txtAcao').val(),
+                        comando: $('#txtComando').val(),
+                        url: $('#txtURL').val()
+                    });
+                }
+                comandoController.salvar(comando);
+            });
         });
 
         $("#btnCancelar").click(function () {
             $("#btnHome").hide();
-            $(':mobile-pagecontainer').pagecontainer('change', '#page1', {
-                transition: 'flip',
-                changeHash: false,
-                reverse: true,
-                showLoadMsg: true
-            });
+            app.montaPainelComandos();
+            $.mobile.changePage("#page1", {transition: "flip"}, true, false);
         });
 
         $("#txtComando").click(function () {
             $('#resultadosVoz').empty();
             navigator.SpeechRecognizer.startRecognize(function (results) {
                 for (i in results) {
-                    $("#resultadosVoz").append('<li> <a href = "#" onclick=\'javascript:app.addComando("' + results[i] + '");\'>' + results[i] + '</a></li>');
+                    var comandoVoz = results[i].toLowerCase();
+                    $("#resultadosVoz").append('<li> <a href = "#" onclick=\'javascript:app.addComando("' + comandoVoz + '");\'>' + comandoVoz + '</a></li>');
                     $('#resultadosVoz').listview().listview('refresh');
                 }
                 $('#DlgComandos').popup({positionTo: "window"}).popup('open');
@@ -104,6 +85,7 @@ var app = {
                 console.log("Error message: " + errorMessage);
             }, 4, "Diga o Comando de Voz?", "pt-BR");
         });
+
         $("#btnVozTeste").click(function () { //Adicionar recursividade
             navigator.SpeechRecognizer.startRecognize(function (result) {
                 var comandoVoz = result.toString();
@@ -220,14 +202,10 @@ var app = {
         $("#txtComando").val(comando.comando);
         $("#txtURL").val(comando.url);
 
-        $(':mobile-pagecontainer').pagecontainer('change', '#page3', {
-            transition: 'flip',
-            changeHash: false,
-            reverse: true,
-            showLoadMsg: true
-        });
+        $.mobile.changePage("#page3", {transition: "flip"}, true, false);
     },
     montaPainelComandos: function () {
+        $("#divBtnComandos").html("");
         comandoController.listarTodos(function (results) {
             var map = {};
             for (i = 0; i < results.length; i++) {
@@ -259,5 +237,21 @@ var app = {
     },
     getButtonComando: function (comando) {
         return "<a data-role='button' class='ui-link ui-btn ui-shadow ui-corner-all' onclick=\'javascript:app.actionButtonCommand(" + JSON.stringify(comando) + ");'>" + comando.acao + "</a>";
+    },
+    listaComandos: function () {
+        $("#listaComandosCadastrados").empty();
+        comandoController.listarTodos(function (results) {
+
+            for (i = 0; i < results.length; i++) {
+                var comando = results[i];
+                $("#listaComandosCadastrados").append('<li><a href = "#" onclick=\'javascript:app.editComando(' + JSON.stringify(comando) + ');\'>' + comando.utensilio + ' - ' + comando.acao + '</a><a href="#" onclick=\'javascript:app.excluirComando(' + JSON.stringify(comando) + ');\'>Excluir</a></li>');
+                $('#listaComandosCadastrados').listview().listview('refresh');
+            }
+        });
+    },
+    excluirComando: function (comando) {
+        comandoController.excluir(comando);
+        app.listaComandos();
     }
+
 };

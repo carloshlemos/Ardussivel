@@ -24,10 +24,16 @@ var comandoController = {
             }
         });
     },
-    getComando: function() {
-        return comandoController.Comando;
+    getComando: function (callBackFunction) {
+        if (comandoController.Comando != null || comandoController.Comando != undefined) {
+            persistenceController.load(comandoController.Comando, function (load) {
+                callBackFunction(load);
+            });
+        } else {
+            callBackFunction(null);
+        }
     },
-    setComando: function(comando){
+    setComando: function (comando) {
         comandoController.Comando = comando;
     },
     listarTodos: function (callBackFunction) {
@@ -70,5 +76,10 @@ var comandoController = {
         persistenceController.save(comando);
         persistenceController.flush();
         util.mensagemAtencao('Comando salvo com sucesso.');
+    },
+    excluir: function (comando) {
+        persistenceController.remove(comando);
+        persistenceController.flush();
+        util.mensagemAtencao('Comando removido com sucesso.');
     }
 };

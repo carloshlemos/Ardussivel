@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head> 
     <body> 
-        <div data-role="page" id="page1">
+        <section id="page1" data-role="page" data-theme="a">
             <div data-role="header" data-position="fixed" data-theme="b">
                 <h1>Ardussivel</h1>
                 <a data-role="button" id="btnHome" data-icon="home" data-iconpos="notext"></a>
@@ -18,22 +18,22 @@
             <div id="divBtnComandos" style="padding: 10px;" data-role="collapsible-set" data-content-theme="d">
             </div>
             <div data-role="footer" data-position="fixed" data-theme="b">
-                <div data-role="navbar">
+<!--                <div data-role="navbar">
                     <ul>
                         <li>
                             <a data-role="button" id="btnVoz" data-icon="search">Comando de Voz</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>            
-        </div>
-        <div data-role="page" id="page2">
+        </section>
+        <section id="page2" data-role="page" data-theme="a">
             <div data-role="header" data-position="fixed" data-theme="b">
-                <h1>Comandos cadastrados</h1>
+                <h1>Comandos</h1>
                 <a data-role="button" id="btnVoltar" data-icon="home" data-iconpos="notext"></a>
             </div>            
             <div data-role="content">
-                <ul id="listaComandosCadastrados" data-role="listview">
+                <ul id="listaComandosCadastrados" data-split-icon="delete" data-role="listview">
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="b">
@@ -45,11 +45,11 @@
                     </ul>
                 </div>
             </div>            
-        </div>
-        <div data-role="page" id="page3">
+        </section>
+        <section id="page3" data-role="page" data-theme="a">
             <div data-role="header" data-position="fixed" data-theme="b">
                 <h1>Ardussivel</h1>
-                <a data-role="button" id="btnCancelar" data-icon="home" data-iconpos="notext"></a>
+                <a data-role="button" id="btnCancelar" data-icon="back" data-iconpos="notext"></a>
             </div>
             <div data-role="content">
                 <div data-role="fieldcontain">
@@ -92,7 +92,7 @@
                     </ul>
                 </div>
             </div>            
-        </div>
+        </section>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/lib/persistence.js"></script>
         <script type="text/javascript" src="js/lib/persistence.store.sql.js"></script>

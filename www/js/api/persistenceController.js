@@ -17,7 +17,7 @@ var persistenceController = {
     },
     openDb: function () {
         if (window.openDatabase) {
-            persistence.store.cordovasql.config(persistence, 'ardussivel.db', '0.0.1', 'Banco principal do Ardussivel', 50 * 1024 * 1024, 1);
+            persistence.store.cordovasql.config(persistence, 'ardussivel.db', '1', 'Banco principal do Ardussivel', 50 * 1024 * 1024, 1);
         } else {
             persistence.store.memory.config(persistence);
         }
@@ -48,11 +48,19 @@ var persistenceController = {
             console.log("Erro ao tentar salvar: " + exc);
         }
     },
+    load: function (data, callBackFunction){
+            persistence.transaction(function (transaction) {
+                persistenceController.Comando.load(data.id, function (item) {
+                     callBackFunction(item);
+                });
+            });
+    },
     remove: function (data) {
         try {
             persistence.transaction(function (transaction) {
-                console.log("Removendo...");
-                persistence.remove(data);
+                persistenceController.Comando.load(data.id, function (item) {
+                     persistence.remove(item);
+                });
             });
         }
         catch (exc) {
