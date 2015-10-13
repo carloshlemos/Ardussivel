@@ -17,7 +17,7 @@ var persistenceController = {
     },
     openDb: function () {
         if (window.openDatabase) {
-            persistence.store.cordovasql.config(persistence, 'ardussivel.db', '1', 'Banco principal do Ardussivel', 50 * 1024 * 1024, 1);
+            persistence.store.cordovasql.config(persistence, '/data/data/br.alfa.gnapi_ardussivel/databases/ardussivel.db', '1', 'Banco principal do Ardussivel', 50 * 1024 * 1024, 1);
         } else {
             persistence.store.memory.config(persistence);
         }
